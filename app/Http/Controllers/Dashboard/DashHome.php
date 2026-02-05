@@ -52,7 +52,7 @@ class DashHome extends Controller
         $user_id = auth()->user()->id;
 
         $validatedData = $request->validate([
-            'location' => 'nullable|string',
+            'location' => 'required|string',
             'image' => 'required|string',
         ]);
 
@@ -122,7 +122,7 @@ class DashHome extends Controller
         $user_id = auth()->user()->id;
 
         $validatedData = $request->validate([
-            'location' => 'nullable|string',
+            'location' => 'required|string',
             'image' => 'required|string',
         ]);
 
