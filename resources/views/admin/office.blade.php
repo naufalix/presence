@@ -29,11 +29,11 @@
                   <textarea class="form-control text-start" name="address" rows="3">{{$office->address}}</textarea>
                 </div>
                 <div class="mb-5 col-12 col-md-6">
-                  <label class="required fw-bold mb-2">Nama</label>
+                  <label class="required fw-bold mb-2">Jam masuk</label>
                   <input type="time" class="form-control" name="hour_in" required value="{{$office->hour_in}}" step="1">
                 </div>
                 <div class="mb-5 col-12 col-md-6">
-                  <label class="required fw-bold mb-2">Username</label>
+                  <label class="required fw-bold mb-2">Jam pulang</label>
                   <input type="time" class="form-control" name="hour_out" required value="{{$office->hour_out}}" step="1">
                 </div>
               </div>

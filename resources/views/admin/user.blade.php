@@ -23,7 +23,7 @@
               <th style="min-width: 120px">Email</th>
               <th style="min-width: 120px">Jabatan</th>
               <th style="min-width: 150px">Terakhir diupdate</th>
-              <th style="min-width: 90px">Action</th>
+              <th style="min-width: 170px">Action</th>
             </tr>
           </thead>
           <tbody>
