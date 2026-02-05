@@ -14,7 +14,7 @@ class AdminReport extends Controller
     private function meta()
     {
         $meta = Meta::$data_meta;
-        $meta['title'] = 'Admin | Report';
+        $meta['title'] = 'Admin | Laporan';
         return $meta;
     }
 
