@@ -44,8 +44,8 @@
                   </a>
                 </div>
                 <div class="menu-item">
-                  <a class="menu-link py-2" href="/admin/admin">
-                    <span class="menu-title menu-icon"><i class="mdi mdi-account-tie fs-2"></i> Admin</span>
+                  <a class="menu-link py-2" href="/admin/office">
+                    <span class="menu-title menu-icon"><i class="mdi mdi-office-building fs-2"></i> Kantor</span>
                   </a>
                 </div>
 
