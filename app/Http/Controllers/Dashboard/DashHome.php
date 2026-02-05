@@ -98,6 +98,10 @@ class DashHome extends Controller
         // Convert to webp
         $imageWebp = $image->toWebp(100);
 
+        // Check directory
+        $dir = 'storage/img/absent';
+        if (!is_dir($dir)) {mkdir($dir, 0755, true);}
+
         $filename = date('Y-m-d') . '-' . $user_id . '-in-' . time() . '.webp';
         $imageWebp->save('storage/img/absent/' . $filename);
 
