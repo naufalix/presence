@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Meta;
+use App\Models\Office;
 use App\Models\Presence;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -18,20 +19,20 @@ class DashRecap extends Controller
     }
 
     // default recap: bulan berjalan
-    public function index()
-    {
-        $user_id = auth()->user()->id;
-        $now = Carbon::now();
+    // public function index()
+    // {
+    //     $user_id = auth()->user()->id;
+    //     $now = Carbon::now();
 
-        return view('dashboard.recap', [
-            "meta" => $this->meta(),
-            "presences" => Presence::where('user_id', $user_id)
-                ->whereMonth('presence_date', $now->month)
-                ->whereYear('presence_date', $now->year)
-                ->orderBy('presence_date', 'desc')
-                ->get()
-        ]);
-    }
+    //     return view('dashboard.recap', [
+    //         "meta" => $this->meta(),
+    //         "presences" => Presence::where('user_id', $user_id)
+    //             ->whereMonth('presence_date', $now->month)
+    //             ->whereYear('presence_date', $now->year)
+    //             ->orderBy('presence_date', 'desc')
+    //             ->get()
+    //     ]);
+    // }
 
     // recap berdasarkan bulan pilihan
     public function recap(Request $request){
@@ -94,6 +95,7 @@ class DashRecap extends Controller
             'totalHadir' => $totalHadir,
             'totalTidakHadir' => $totalTidakHadir,
             'persentaseHadir' => $persentaseHadir,
+            'office' => Office::first(),
         ]);
     }
 

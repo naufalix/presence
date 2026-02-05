@@ -61,19 +61,22 @@
           <thead>
             <tr class="fw-bold fs-6 text-gray-800 border-bottom border-gray-200">
               <th class="width: 30px">No</th>
-              <th style="min-width: 120px">Tanggal</th>
+              <th style="min-width: 160px">Tanggal</th>
               <th style="min-width: 200px">Scan Masuk</th>
               <th style="min-width: 200px">Scan Pulang</th>
               <th>Satus</th>
-              <th style="min-width: 90px">Action</th>
+              <th style="min-width: 160px">Action</th>
             </tr>
           </thead>
           <tbody>
+            @php
+              $hour_in = $office->hour_in;
+            @endphp
             @foreach ($daysInMonth as $i => $day)
             @php
-                $p = $presences[$day] ?? null;
-                $carbonDay = \Carbon\Carbon::parse($day);
-                $isWeekend = $carbonDay->isSunday();
+              $p = $presences[$day] ?? null;
+              $carbonDay = \Carbon\Carbon::parse($day);
+              $isWeekend = $carbonDay->isSunday();
             @endphp
             <tr class="{{ $isWeekend ? 'table-info' : '' }}">
                 <td>{{ $i + 1 }}</td>
@@ -83,7 +86,12 @@
                     <div class="symbol symbol-30px me-5" data-bs-toggle="modal" data-bs-target="#foto" onclick="foto('{{ $p->image_in }}')">
                       <img src="/storage/img/absent/{{ $p->image_in }}" class="h-30 of-cover rounded-0">
                     </div>
-                    {{ $p->time_in }}
+                    <span class="align-middle me-3">{{ $p->time_in }}</span>
+                    @if($p->time_in < $hour_in)
+                      <span class="badge bg-purple">Tepat waktu</span>
+                    @else
+                      <span class="badge bg-danger align-middle">Terlambat</span>
+                    @endif
                   @else
                     <span class="text-muted">-</span>
                   @endif
@@ -93,7 +101,7 @@
                     <div class="symbol symbol-30px me-5" data-bs-toggle="modal" data-bs-target="#foto" onclick="foto('{{ $p->image_out ?: 'default.jpg' }}')">
                       <img src="/storage/img/absent/{{ $p->image_out ?: 'default.jpg' }}" class="h-30 of-cover rounded-0">
                     </div>
-                    {{ $p->time_out }}
+                    <span class="align-middle me-3">{{ $p->time_out }}</span>
                   @else
                     <span class="text-muted">-</span>
                   @endif
@@ -107,12 +115,12 @@
                 </td>
                 <td>
                   @if($p && $p->location_in)
-                    <a href="#" class="btn btn-purple text-white py-1 px-2 fs-7" data-bs-toggle="modal" data-bs-target="#map" onclick="map({{ $p->location_in }})">
+                    <a href="#" class="btn btn-purple text-white py-1 ps-2 pe-3 fs-7" data-bs-toggle="modal" data-bs-target="#map" onclick="map({{ $p->location_in }})">
                       <i class="bi bi-geo-alt-fill text-white"></i> Masuk
                     </a>
                   @endif
                   @if($p && $p->location_out)
-                    <a href="#" class="btn btn-purple text-white py-1 px-2 fs-7" data-bs-toggle="modal" data-bs-target="#map" onclick="map({{ $p->location_out }})">
+                    <a href="#" class="btn btn-purple text-white py-1 ps-2 pe-3 fs-7" data-bs-toggle="modal" data-bs-target="#map" onclick="map({{ $p->location_out }})">
                       <i class="bi bi-geo-alt-fill text-white"></i> Pulang
                     </a>
                   @endif

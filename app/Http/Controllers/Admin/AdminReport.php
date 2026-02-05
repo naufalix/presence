@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Meta;
+use App\Models\Office;
 use App\Models\Presence;
 use App\Models\User;
 use Carbon\Carbon;
@@ -80,6 +81,7 @@ class AdminReport extends Controller
             'totalTidakHadir' => $totalTidakHadir,
             'persentaseHadir' => $persentaseHadir,
             'user' => $user,
+            'office' => Office::first(),
         ]);
     }
 
