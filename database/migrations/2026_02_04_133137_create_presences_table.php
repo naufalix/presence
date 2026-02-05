@@ -1,56 +1,37 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-use App\Http\Controllers\Controller;
-use App\Models\Meta;
-use App\Models\Presence;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-
-class DashRecap extends Controller
+return new class extends Migration
 {
-    private function meta()
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
     {
-        $meta = Meta::$data_meta;
-        $meta['title'] = 'Dashboard | Recap';
-        return $meta;
+        Schema::create('presences', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->date('presence_date');
+            $table->string('time_in');
+            $table->string('time_out')->nullable();
+            $table->string('location_in');
+            $table->string('location_out')->nullable();            
+            $table->string('image_in');
+            $table->string('image_out')->nullable();
+            $table->string('status')->default(0);
+            $table->timestamps();
+        });
     }
 
-    // default recap: bulan berjalan
-    public function index()
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
     {
-        $user_id = auth()->user()->id;
-        $now = Carbon::now();
-
-        return view('dashboard.recap', [
-            "meta" => $this->meta(),
-            "presences" => Presence::where('user_id', $user_id)
-                ->whereMonth('presence_date', $now->month)
-                ->whereYear('presence_date', $now->year)
-                ->orderBy('presence_date', 'ASC')
-                ->get()
-        ]);
+        Schema::dropIfExists('presences');
     }
-
-    // recap berdasarkan bulan pilihan
-    public function recap(Request $request)
-    {
-        $validatedData = $request->validate([
-            'month' => 'required|string', // format: YYYY-MM
-        ]);
-
-        $user_id = auth()->user()->id;
-
-        $date = Carbon::createFromFormat('Y-m', $validatedData['month']);
-
-        return view('dashboard.recap', [
-            "meta" => $this->meta(),
-            "presences" => Presence::where('user_id', $user_id)
-                ->whereMonth('presence_date', $date->month)
-                ->whereYear('presence_date', $date->year)
-                ->orderBy('presence_date', 'ASC')
-                ->get()
-        ]);
-    }
-}
+};
